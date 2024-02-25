@@ -1,0 +1,43 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Slide Navbar</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'form.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+      <div class="messages">
+          {% if messages %}
+               {% for message in messages %}
+                       <h1>{{ message }}</h1>
+                    </div>
+               {% endfor %}
+           {% endif %}
+      </div>
+
+	<div class="main">
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+			<div class="signup">
+				<form method="post" >
+					<label for="chk" aria-hidden="true">ثبت نام</label>
+					{{ form.username }}
+                    {{ form.password1 }}
+                    {{ form.password2 }}
+
+					<button id="wiw">ثبت نام</button>
+				</form>
+			</div>
+			<div class="login">{% csrf_token %}
+				<form method="POST" action="{% url 'Login' %}">
+					<label for="chk" aria-hidden="true">ورود</label>
+					<input type="txt" name="username" placeholder="نام کاربری" required="">
+					<input type="password" name="password" placeholder="رمزعبور" required="">
+					<button id="wiw" type="submit">ورود</button>
+				</form>
+			</div>
+	</div>
+</body>
+</html>
