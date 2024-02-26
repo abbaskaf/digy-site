@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app1.apps.App1Config',
+    'cart.apps.CartConfig',
     'django.contrib.humanize'
 ]
 
