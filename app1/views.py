@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect, HttpResponse
-from .models import Product
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
+from .models import Product, Category
 from django.views.generic import DetailView, TemplateView, ListView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -16,6 +16,27 @@ def HomeView(request):
 
 def AboutView(request):
     return render(request, 'about.html')
+
+
+# class CategoryView(TemplateView):
+#     template_name = 'category.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         cat = kwargs['cat']
+#         post = get_object_or_404(Category, title=cat)
+#         posty = Product.objects.filter(category=post)
+#         context['post'] = post
+#         context['posty'] = posty
+#         return context
+def CategoryView(request, cate):
+    try:
+        cat = Category.objects.get(title=cate)
+        product = Product.objects.filter(category=cat)
+        return render(request, 'category.html', {'cat': cat, 'product': product})
+    except:
+        messages.success(request, 'لطفا دسته بندی صحیح را انتخاب کنید')
+        return redirect('home')
 
 
 class DetaView(DetailView):
@@ -62,7 +83,17 @@ def SignUp(request):
         forms = SignupForm(request.POST)
         if forms.is_valid():
             forms.save()
-            messages.success(request, 'ثبت نام شما با موفقیت انجام شد')
+            messages.error(request, 'ثبت نام شما با موفقیت انجام شد')
             return redirect('home')
         else:
             return HttpResponse(F"{forms.errors}")
+
+
+def CategoryView(request, cate):
+    try:
+        cat = Category.objects.get(title=cate)
+        product = Product.objects.filter(category=cat)
+        return render(request, 'category.html', {'cat': cat, 'product': product})
+    except:
+        messages.success(request, 'لطفا دسته بندی صحیح را انتخاب کنید')
+        return redirect('home')

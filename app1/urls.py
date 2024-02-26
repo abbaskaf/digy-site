@@ -9,8 +9,8 @@ urlpatterns = [
     path('<int:pk>', views.DetaView.as_view(), name='detail'),
     path('Logout', views.LogoutUser, name='Logout'),
     path('Login', views.LoginUser, name='Login'),
-    path('signup',views.SignUp,name='sign')
-
+    path('signup', views.SignUp, name='sign'),
+    path('category/<str:cate>', views.CategoryView, name='category')
 
 ]
 if settings.DEBUG:
