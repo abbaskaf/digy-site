@@ -120,10 +120,10 @@
                                 </div>
                                 <div class="row pb-3">
                                     <div class="col d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">خرید</button>
+                                        <button type="submit" class="btn btn-success btn-lg" >بازگشت</button>
                                     </div>
                                     <div class="col d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">افزودن به سبد خرید</button>
+                                        <button class="btn btn-success" type="button" value="{{ product.id }}" id ='add-cart' >افزودن به سبد خرید</button>
                                     </div>
                                 </div>
                             </form>
@@ -140,6 +140,25 @@
     <script src={% static "templatemo.js" %}></script>
     <script src={% static "custom.js" %}></script>
     <script>
+      $(document).on('click', '#add-cart', function (e) {
+          e.preventDefault();
+          $.ajax({
+              type: 'POST',
+              url: "{% url 'AddCart' %}",
+              data:{
+                  product_id: $('#add-cart').val(),
+                  csrfmiddlewaretoken: '{{ csrf_token }}',
+                  action:'post'
+              },
+              success:function (json){
+                  console.log(json)
+              },
+              error:function (xhr,errmsg,err){
+
+              }
+          })
+
+      })
       $('#carousel-related-product').slick({
             infinite: true,
             arrows: false,
